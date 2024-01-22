@@ -3,6 +3,7 @@
     "@chainlink/contracts": "^0.8.0",
     "@truffle/hdwallet-provider": "^2.1.15",
     "axios": "^1.6.5",
+    "dotenv": "^16.3.2",
     "ethers": "^6.9.2",
     "swr": "^2.2.4"
   }

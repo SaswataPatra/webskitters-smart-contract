@@ -41,7 +41,7 @@
  * https://trufflesuite.com/docs/truffle/getting-started/using-the-truffle-dashboard/
  */
 
-// require('dotenv').config();
+require('dotenv').config();
 // const { MNEMONIC, PROJECT_ID } = process.env;
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
@@ -72,9 +72,10 @@ module.exports = {
     sepolia: {
       provider: () => new HDWalletProvider({
         mnemonic: {
-          phrase: "seek bind multiply blame hamster pigeon hotel field canvas innocent embark burger"
+          phrase: process.env.METAMASK_MNEUMONIC
         },
-        providerOrUrl: "https://sepolia.infura.io/v3/fd7ea79bdf4b44e48c15c9a03d805ab9"
+        providerOrUrl: process.env.INFURA_PROVIDER,
+        addressIndex :1
       }),
       network_id: 11155111, // Sepolia's network ID
      // Set the gas price to an appropriate value
