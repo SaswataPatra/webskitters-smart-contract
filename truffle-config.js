@@ -72,16 +72,15 @@ module.exports = {
     sepolia: {
       provider: () => new HDWalletProvider({
         mnemonic: {
-          phrase: "..."
+          phrase: "seek bind multiply blame hamster pigeon hotel field canvas innocent embark burger"
         },
         providerOrUrl: "https://sepolia.infura.io/v3/fd7ea79bdf4b44e48c15c9a03d805ab9"
       }),
       network_id: 11155111, // Sepolia's network ID
-      gas : 6700000,
-      gasPrice: 69000000000, // Set the gas price to an appropriate value
+     // Set the gas price to an appropriate value
       confirmations: 2, // Set the number of confirmations needed for a transaction
       timeoutBlocks: 5, // Set the timeout for transactions
-      skipDryRun: true // Skip the dry run option
+      skipDryRun: false // Skip the dry run option
     }
 
     //
