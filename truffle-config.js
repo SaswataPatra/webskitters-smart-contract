@@ -77,11 +77,11 @@ module.exports = {
         providerOrUrl: "https://sepolia.infura.io/v3/0ea4fbedeba6421a90c743e3d9eda5be"
       }),
       network_id: 11155111, // Sepolia's network ID
-      gas: 4000000, // Adjust the gas limit as per your requirements
-      gasPrice: 110000000000, // Set the gas price to an appropriate value
+      gas : 6700000,
+      gasPrice: 69000000000, // Set the gas price to an appropriate value
       confirmations: 2, // Set the number of confirmations needed for a transaction
-      timeoutBlocks: 5, // Set the timeout for transactions
-      skipDryRun: true // Skip the dry run option
+      timeoutBlocks: 200, // Set the timeout for transactions
+      skipDryRun: true, // Skip the dry run option
     }
 
     //
