@@ -10,7 +10,7 @@ import { useEffect } from "react"
 
 export function Maincomponent() {
   return (
-    <main className="bg-gray-100 dark:bg-gray-900 min-h-screen py-10 px-4 md:px-6">
+    <main className="min-h-screen py-10 px-4 md:px-6">
 
       <section className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Card>
@@ -25,11 +25,11 @@ export function Maincomponent() {
               </div>
               <div className="space-y-2">
                 <Label>Live Price of Gold</Label>
-                <p className="text-gray-700 dark:text-gray-300">1,200.00 USD</p>
+                <p className="text-gray-900">1,200.00 USD</p>
               </div>
               <div className="space-y-2">
                 <Label>Wallet Balance</Label>
-                <p className="text-gray-700 dark:text-gray-300">10,000.00 USD</p>
+                <p className="text-gray-900">10,000.00 USD</p>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="range">Investment Range (0% - 100%)</Label>

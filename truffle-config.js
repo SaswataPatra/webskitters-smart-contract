@@ -71,17 +71,17 @@ module.exports = {
     },
     sepolia: {
       provider: () => new HDWalletProvider({
-        privateKeys:
-          ["78b0152433f48a07f7351f65128bf3450944274ad70a2271dc4224538e1e3454"]
-        ,
-        providerOrUrl: "https://sepolia.infura.io/v3/0ea4fbedeba6421a90c743e3d9eda5be"
+        mnemonic: {
+          phrase: "..."
+        },
+        providerOrUrl: "https://sepolia.infura.io/v3/fd7ea79bdf4b44e48c15c9a03d805ab9"
       }),
       network_id: 11155111, // Sepolia's network ID
       gas: 4000000, // Adjust the gas limit as per your requirements
       gasPrice: 110000000000, // Set the gas price to an appropriate value
       confirmations: 2, // Set the number of confirmations needed for a transaction
       timeoutBlocks: 5, // Set the timeout for transactions
-      skipDryRun: true // Skip the dry run option
+      skipDryRun: false // Skip the dry run option
     }
 
     //
@@ -121,7 +121,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "0.8.19",      // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.8.22",      // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {
