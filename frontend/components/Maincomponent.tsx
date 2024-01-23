@@ -13,17 +13,6 @@ import { error } from "console"
 import { checkWindow } from "@/lib/utils"
 
 
-
-// var myHeaders = new Headers();
-// myHeaders.append("x-access-token", "goldapi-5qygorlrq0ywfk-io");
-// myHeaders.append("Content-Type", "application/json");
-
-// var requestOptions = {
-//   method: 'GET',
-//   headers: myHeaders,
-//   redirect: 'follow'
-// };
-
 export function Maincomponent() {
   const [goldPrice, setGoldPrice] = useState<string | null>(null)
   const { provider } = useweb3()
@@ -32,37 +21,40 @@ export function Maincomponent() {
   const handleSubmit = async (type: "BUY" | "SELL") => {
     try {
       console.log("INSIDE HANDLE", contract?.data)
-    
+
       const amountElement: any = document.querySelector('#amount');
       const amount = ethers.parseEther(amountElement.value);
-      console.log("This is the amount", amount)
+      // console.log("This is the amount", amount)
 
-      if (checkWindow()) {
-        console.log(window.global)
-        switch (type) {
-          case 'BUY':
-            try {
 
-              if (contract && contract.data) {
+      console.log(window.global)
+      switch (type) {
+        case 'BUY':
+          try {
 
-                const tx_purchase = await contract.data.buyGoldTokens({ value: amount })
-                console.log('Transaction Hash:', tx_purchase);
+            if (contract && contract.data) {
 
-              }
-            } catch (err) {
-              console.error('Failed to buy:', err);
+              const tx_purchase = await contract.data.buyGoldTokens({ value: amount })
+              console.log('Transaction Hash:', tx_purchase);
+
             }
-            break;
-          case 'SELL':
-            try {
-              const tx_sale = await contract.sellGoldToken(amount);
+          } catch (err) {
+            console.error('Failed to buy:', err);
+          }
+          break;
+        case 'SELL':
+          try {
+            if (contract && contract.data) {
+              const tx_sale = await contract.data.sellGoldToken(amount);
               console.log('Transaction Hash:', tx_sale);
-            } catch (err) {
-              console.error('Failed to sell:', err);
             }
-            break;
-        }
+
+          } catch (err) {
+            console.error('Failed to sell:', err);
+          }
+          break;
       }
+
 
 
     }
