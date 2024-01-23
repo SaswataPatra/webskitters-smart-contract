@@ -44,11 +44,11 @@ export function Maincomponent() {
           break;
         case 'SELL':
           try {
-            if (contract && contract.data) {
+            if (contract && contract.data){
               const tx_sale = await contract.data.sellGoldToken(amount);
-              console.log('Transaction Hash:', tx_sale);
+            console.log('Transaction Hash:', tx_sale);
             }
-
+            
           } catch (err) {
             console.error('Failed to sell:', err);
           }

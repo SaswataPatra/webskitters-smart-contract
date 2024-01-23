@@ -2,6 +2,6 @@
 
 ## Installation
 
-- `npm install -g truffle`
-- `yarn`
-- `cd frontend && yarn`
+- `npm i`
+- `cd frontend && npm i`
+- `npm run dev`

@@ -20,6 +20,7 @@ export const hookFactory: UseContractHook = ({ contract, isLoading }) => () => {
     return {
         ...swr,
         data,
+        
         mutate,
         isLoading: isLoading as boolean
     }
