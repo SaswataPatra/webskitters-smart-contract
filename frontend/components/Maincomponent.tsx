@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
 import { useEffect, useState } from "react"
 import { useContract } from "./hooks"
-import { useweb3 } from "./providers/web3"
+import { useWeb3 } from "./providers/web3"
 import { ethers } from "ethers"
 import { BigNumber } from 'bignumber.js';
 import { error } from "console"
@@ -15,7 +15,7 @@ import { checkWindow } from "@/lib/utils"
 
 export function Maincomponent() {
   const [goldPrice, setGoldPrice] = useState<string | null>(null)
-  const { provider } = useweb3()
+  const { provider } = useWeb3()
   const { contract } = useContract();
   console.log("SIGNER ")
   const handleSubmit = async (type: "BUY" | "SELL") => {
