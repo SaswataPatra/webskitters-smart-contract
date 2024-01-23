@@ -66,7 +66,7 @@ export const loadContract = async (
         Artifact.abi,
         provider
       )
-      // console.log("THIS IS THE ADDRESS OF CONTRACT",await contract.getAddress())
+      // console.log("THIS IS THE CURRENT PRICE OF GOLD",await (contract.getLatestGoldPrice()).then(res=>res.toString()))
       return contract;
     } else {
       return Promise.reject(`Contract: [${name}] cannot be loaded!`);

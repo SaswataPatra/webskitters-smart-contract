@@ -34,8 +34,8 @@ export const hookFactory: NetworkHookFactory = ({ provider, isLoading }) => () =
 
         return NETWORKS[chain_id as unknown as number]
     }, config)
-    console.log("DATA", data)
-    console.log("TARGET", targetNetwork)
+    // console.log("DATA", data)
+    // console.log("TARGET", targetNetwork)
     return {
         ...swr,
         data,

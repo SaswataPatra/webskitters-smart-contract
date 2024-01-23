@@ -2,7 +2,6 @@ import { Fragment, useEffect } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useAccount, useContract, useNetwork } from '@/components/hooks'
-import { useweb3 } from '@/components/providers/web3'
 import Link from 'next/link'
 import Walletbar from './WalletBar'
 
@@ -19,27 +18,31 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Navbar() {
-  const { account } = useAccount();
-  const {network} = useNetwork()
-  
-  const { contract } = useContract();
+  export default function Navbar() {
+    const { account } = useAccount();
+    const {network} = useNetwork()
+    
+    const { contract } = useContract();
+    // console.log("THIS IS CONTRACT",contract!.data?.getLatestGoldPrice().then((res: { toString: () => any })=>res.toString()))  
 
-  useEffect(() => {
-    const fetchLatestGoldPrice = async() => {
-      try {
-        // console.log("Inside swdjsbxjksbjk")
-          if (contract && contract.methods && typeof contract.methods.getLatestGoldPrice === 'function') {
-              const price = await contract.methods.getLatestGoldPrice().call();
-              console.log("Latest Gold Price: ", price);
+    useEffect(() => {
+      const fetchLatestGoldPrice = async() => {
+        try {
+          if (contract !=undefined && contract.data!=undefined){
+            console.log("Start fetching");
+            console.log("THIS IS DATA", await contract.data.getLatestGoldPrice().then((res: { toString: () => any }) => res.toString()));
+            console.log("End fetching");  
           }
-      } catch (err) {
+         
+        } catch (err) {
           console.warn("Error fetching latest gold price", err);
+        }
       }
-  
+    
+      console.log("Calling fetch function");
       fetchLatestGoldPrice();
-    }
-  }, [contract]);
+      console.log("Finished calling fetch function");
+    }, [contract.data]);
 
   // console.log("HELOOOOOO ", network)
   // console.log("Is Loading: ", account.isLoading);  

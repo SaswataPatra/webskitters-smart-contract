@@ -10,29 +10,29 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
 
-  const { provider, ethereum, isLoading, contract } = useweb3();
-  useEffect(() => {
+  // const { provider, ethereum, isLoading, contract } = useweb3();
+  // useEffect(() => {
 
-    const fetchAccounts = async () => {
-      if (provider) {
-        const res: string[] = await provider!.send("eth_requestAccounts", []);
-        const signer = await provider.getSigner()
-        // console.log("RESULT", res)
-        // console.log("signer", signer)
-        // console.log("ADDRESS -", signer.address)
-      }
-    }
-    fetchAccounts();
-  }, [provider])
+  //   const fetchAccounts = async () => {
+  //     if (provider) {
+  //       const res: string[] = await provider!.send("eth_requestAccounts", []);
+  //       const signer = await provider.getSigner()
+  //       // console.log("RESULT", res)
+  //       // console.log("signer", signer)
+  //       // console.log("ADDRESS -", signer.address)
+  //     }
+  //   }
+  //   fetchAccounts();
+  // }, [provider])
 
 
-  // console.log("ETHEREUM", ethereum)
-  // console.log("Contract", contract)
+  // // console.log("ETHEREUM", ethereum)
+  // // console.log("Contract", contract)
 
-  const getInfo = async () => {
-    return await contract!.getAddress()
-  }
-  if (contract) console.log(getInfo())
+  // const getInfo = async () => {
+  //   return await contract!.getAddress()
+  // }
+  // if (contract) console.log(getInfo())
 
   return (
     <BaseLayout>

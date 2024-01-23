@@ -39,7 +39,7 @@ const Walletbar: FunctionComponent<WalletbarProps> = ({
 
   if (account) {
     const address = JSON.parse(account).address
-    console.log("KLKLKLKLKLKLKL",address)
+    // console.log("KLKLKLKLKLKLKL",address)
     return (
       <Menu as="div" className="ml-3 relative">
         <div>
