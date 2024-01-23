@@ -5,10 +5,44 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
-import { useweb3 } from "./providers/web3"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { useContract } from "./hooks"
+import { BigNumber } from 'bignumber.js';
+import { json } from "stream/consumers"
+
+var myHeaders = new Headers();
+myHeaders.append("x-access-token", "goldapi-5qygorlrq0ywfk-io");
+myHeaders.append("Content-Type", "application/json");
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
 
 export function Maincomponent() {
+  const [goldPrice, setGoldPrice] = useState<string | null>(null)
+
+  const { contract } = useContract();
+
+  useEffect(() => {
+    const fetchGoldPrice = async () => {
+      try {
+        const response = await fetch('https://www.goldapi.io/api/XAU/USD', {
+          method: 'GET',
+          headers: {
+            'x-access-token': 'goldapi-5qygorlrq0ywfk-io'
+          }
+        });
+
+        const jsonData = await response.json();
+        setGoldPrice(jsonData.price.toString());
+      } catch (err) {
+        console.warn("Error fetching gold price", err);
+      }
+    }
+    fetchGoldPrice();
+  }, [goldPrice]);
   return (
     <main className="min-h-screen py-10 px-4 md:px-6">
 
@@ -24,8 +58,8 @@ export function Maincomponent() {
                 <Input id="amount" placeholder="Enter amount" />
               </div>
               <div className="space-y-2">
-                <Label>Live Price of Gold</Label>
-                <p className="text-gray-900">1,200.00 USD</p>
+                <Label>Live Price of Gold in USD</Label>
+                <p className="text-gray-900">{goldPrice}</p>
               </div>
               <div className="space-y-2">
                 <Label>Wallet Balance</Label>

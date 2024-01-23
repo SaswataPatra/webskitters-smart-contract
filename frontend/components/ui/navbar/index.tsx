@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useAccount, useContract, useNetwork } from '@/components/hooks'
@@ -18,31 +18,10 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-  export default function Navbar() {
-    const { account } = useAccount();
-    const {network} = useNetwork()
-    
-    const { contract } = useContract();
-    // console.log("THIS IS CONTRACT",contract!.data?.getLatestGoldPrice().then((res: { toString: () => any })=>res.toString()))  
-
-    useEffect(() => {
-      const fetchLatestGoldPrice = async() => {
-        try {
-          if (contract !=undefined && contract.data!=undefined){
-            console.log("Start fetching");
-            console.log("THIS IS DATA", await contract.data.getLatestGoldPrice().then((res: { toString: () => any }) => res.toString()));
-            console.log("End fetching");  
-          }
-         
-        } catch (err) {
-          console.warn("Error fetching latest gold price", err);
-        }
-      }
-    
-      console.log("Calling fetch function");
-      fetchLatestGoldPrice();
-      console.log("Finished calling fetch function");
-    }, [contract.data]);
+export default function Navbar() {
+  const { account } = useAccount();
+  const { network } = useNetwork()
+  
 
   // console.log("HELOOOOOO ", network)
   // console.log("Is Loading: ", account.isLoading);  
@@ -56,6 +35,7 @@ function classNames(...classes: string[]) {
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
         <>
+        {/* {`This is gold price ${goldPrice}`} */}
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -99,16 +79,16 @@ function classNames(...classes: string[]) {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-              <div className="text-gray-300 self-center mr-2">
+                <div className="text-gray-300 self-center mr-2">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-blue-100 text-purple-800">
                     <svg className="-ml-0.5 mr-1.5 h-2 w-2 text-indigo-400" fill="currentColor" viewBox="0 0 8 8">
                       <circle cx={4} cy={4} r={3} />
                     </svg>
-                    { network.isLoading ?
+                    {network.isLoading ?
                       "Loading..." :
                       account.isInstalled ?
-                      network.data :
-                      "Install Web3 Wallet"
+                        network.data :
+                        "Install Web3 Wallet"
                     }
                   </span>
                 </div>
