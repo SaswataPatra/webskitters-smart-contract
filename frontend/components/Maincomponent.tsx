@@ -29,20 +29,10 @@ export function Maincomponent() {
   const { provider } = useweb3()
   const { contract } = useContract();
   console.log("SIGNER ")
-  // Function to handle buying and selling
   const handleSubmit = async (type: "BUY" | "SELL") => {
     try {
       console.log("INSIDE HANDLE", contract?.data)
-      // debugger
-      // if (provider) {
-      //   const signer = await provider.getSigner();
-      //   console.log("Signer: ", signer);
-      // } else {
-      //   console.log("Provider is not defined");
-      // }
-
-
-      // Convert entered amount to Wei
+    
       const amountElement: any = document.querySelector('#amount');
       const amount = ethers.parseEther(amountElement.value);
       console.log("This is the amount", amount)
@@ -55,7 +45,7 @@ export function Maincomponent() {
 
               if (contract && contract.data) {
 
-                const tx_purchase = await contract.data.buyGoldTokens({ value: 100000000000000 })
+                const tx_purchase = await contract.data.buyGoldTokens({ value: amount })
                 console.log('Transaction Hash:', tx_purchase);
 
               }
@@ -80,7 +70,7 @@ export function Maincomponent() {
       console.warn("Some error has occured")
     }
   }
-
+  //API TO FETCH GOLD PRICE 
   // useEffect(() => {
   //   const fetchGoldPrice = async () => {
   //     try {

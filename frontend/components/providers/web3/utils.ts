@@ -47,15 +47,13 @@ const NETWORK_ID = process.env.NEXT_PUBLIC_NETWORK_ID
 
 
 export const loadContract = async (
-    name: string,  // NftMarket
+    name: string, 
     provider: BrowserProvider 
   ): Promise<Contract> => {
   
     if (!NETWORK_ID) {
       return Promise.reject("Network ID is not defined!");
     }
-  
-    // const res = await fetch(`/contracts/${name}.json`);
     const res = await fetch(`contracts/${name}.json`);
 
     const Artifact = await res.json();
@@ -66,10 +64,6 @@ export const loadContract = async (
         Artifact.abi,
         signer
       )
-      // console.log("THIS IS THE CURRENT PRICE OF GOLD",await (contract.getLatestGoldPrice()).then(res=>res.toString()))
-
-      // const tx = await contract.buyGoldTokens({value :100000000000000 })
-      // console.log("TRANSACTION HASH ", tx)
       return contract;
     } else {
       return Promise.reject(`Contract: [${name}] cannot be loaded!`);
