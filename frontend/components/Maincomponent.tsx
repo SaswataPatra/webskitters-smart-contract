@@ -1,5 +1,4 @@
 
-import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -7,42 +6,121 @@ import { Button } from "@/components/ui/button"
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
 import { useEffect, useState } from "react"
 import { useContract } from "./hooks"
+import { useweb3 } from "./providers/web3"
+import { ethers } from "ethers"
 import { BigNumber } from 'bignumber.js';
-import { json } from "stream/consumers"
+import { error } from "console"
+import { checkWindow } from "@/lib/utils"
 
-var myHeaders = new Headers();
-myHeaders.append("x-access-token", "goldapi-5qygorlrq0ywfk-io");
-myHeaders.append("Content-Type", "application/json");
 
-var requestOptions = {
-  method: 'GET',
-  headers: myHeaders,
-  redirect: 'follow'
-};
+
+// var myHeaders = new Headers();
+// myHeaders.append("x-access-token", "goldapi-5qygorlrq0ywfk-io");
+// myHeaders.append("Content-Type", "application/json");
+
+// var requestOptions = {
+//   method: 'GET',
+//   headers: myHeaders,
+//   redirect: 'follow'
+// };
 
 export function Maincomponent() {
   const [goldPrice, setGoldPrice] = useState<string | null>(null)
-
+  const { provider } = useweb3()
   const { contract } = useContract();
+  console.log("SIGNER ")
+  // Function to handle buying and selling
+  const handleSubmit = async (type: "BUY" | "SELL") => {
+    try {
+      console.log("INSIDE HANDLE", contract?.data)
+      // debugger
+      // if (provider) {
+      //   const signer = await provider.getSigner();
+      //   console.log("Signer: ", signer);
+      // } else {
+      //   console.log("Provider is not defined");
+      // }
+
+
+      // Convert entered amount to Wei
+      const amountElement: any = document.querySelector('#amount');
+      const amount = ethers.parseEther(amountElement.value);
+      console.log("This is the amount", amount)
+
+      if (checkWindow()) {
+        console.log(window.global)
+        switch (type) {
+          case 'BUY':
+            try {
+
+              if (contract && contract.data) {
+
+                const tx_purchase = await contract.data.buyGoldTokens({ value: 100000000000000 })
+                console.log('Transaction Hash:', tx_purchase);
+
+              }
+            } catch (err) {
+              console.error('Failed to buy:', err);
+            }
+            break;
+          case 'SELL':
+            try {
+              const tx_sale = await contract.sellGoldToken(amount);
+              console.log('Transaction Hash:', tx_sale);
+            } catch (err) {
+              console.error('Failed to sell:', err);
+            }
+            break;
+        }
+      }
+
+
+    }
+    catch (error) {
+      console.warn("Some error has occured")
+    }
+  }
+
+  // useEffect(() => {
+  //   const fetchGoldPrice = async () => {
+  //     try {
+  //       const response = await fetch('https://www.goldapi.io/api/XAU/USD', {
+  //         method: 'GET',
+  //         headers: {
+  //           'x-access-token': 'goldapi-5qygorlrq0ywfk-io'
+  //         }
+  //       });
+
+  //       const jsonData = await response.json();
+  //       setGoldPrice(jsonData.price);
+  //     } catch (err) {
+  //       console.warn("Error fetching gold price", err);
+  //     }
+  //   }
+  //   fetchGoldPrice();
+  // }, [goldPrice]);
 
   useEffect(() => {
-    const fetchGoldPrice = async () => {
-      try {
-        const response = await fetch('https://www.goldapi.io/api/XAU/USD', {
-          method: 'GET',
-          headers: {
-            'x-access-token': 'goldapi-5qygorlrq0ywfk-io'
-          }
-        });
+    const fetchLatestGoldPrice = async () => {
+      if (contract && contract.data) {
+        try {
 
-        const jsonData = await response.json();
-        setGoldPrice(jsonData.price.toString());
-      } catch (err) {
-        console.warn("Error fetching gold price", err);
+          const signer = await provider!.getSigner()
+
+          console.log("SIGNER :", signer)
+          const fetchedPrice = await contract.data.getLatestGoldUsdPrice().then((res: { toString: () => any }) => res.toString());
+          var finalPrice = new BigNumber(fetchedPrice).multipliedBy(Math.pow(10, -8))
+          // console.log("This is the finalPrice", finalPrice.toString())
+          setGoldPrice(finalPrice.toString());
+        } catch (err) {
+          console.warn("Error fetching latest gold price", err);
+        }
       }
     }
-    fetchGoldPrice();
-  }, [goldPrice]);
+
+    fetchLatestGoldPrice();
+  }, [contract]);
+
   return (
     <main className="min-h-screen py-10 px-4 md:px-6">
 
@@ -52,7 +130,7 @@ export function Maincomponent() {
             <CardTitle>Buy/Sell</CardTitle>
           </CardHeader>
           <CardContent>
-            <form className="space-y-4">
+            <form className="space-y-4" >
               <div className="space-y-2">
                 <Label htmlFor="amount">Amount</Label>
                 <Input id="amount" placeholder="Enter amount" />
@@ -70,8 +148,8 @@ export function Maincomponent() {
                 <Input className="w-full" id="range" max="100" min="0" type="range" />
               </div>
               <div className="flex gap-4">
-                <Button className="flex-1 bg-amber-500 text-white">Buy</Button>
-                <Button className="flex-1 border-amber-500 text-amber-500" variant="outline">
+                <Button type="button" className="flex-1 bg-amber-500 text-white" onClick={() => handleSubmit('BUY')}>Buy</Button>
+                <Button type="button" className="flex-1 border-amber-500 text-amber-500" onClick={() => handleSubmit('SELL')} variant="outline">
                   Sell
                 </Button>
               </div>

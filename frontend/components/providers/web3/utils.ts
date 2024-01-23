@@ -59,14 +59,17 @@ export const loadContract = async (
     const res = await fetch(`contracts/${name}.json`);
 
     const Artifact = await res.json();
-  
+    const signer = await provider!.getSigner()
     if (Artifact.networks[NETWORK_ID].address) {
       const contract = new ethers.Contract(
         Artifact.networks[NETWORK_ID].address,
         Artifact.abi,
-        provider
+        signer
       )
       // console.log("THIS IS THE CURRENT PRICE OF GOLD",await (contract.getLatestGoldPrice()).then(res=>res.toString()))
+
+      // const tx = await contract.buyGoldTokens({value :100000000000000 })
+      // console.log("TRANSACTION HASH ", tx)
       return contract;
     } else {
       return Promise.reject(`Contract: [${name}] cannot be loaded!`);
