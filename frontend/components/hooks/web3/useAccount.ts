@@ -21,7 +21,7 @@ export const hookFactory: AccountHookFactory = ({ provider, ethereum, isLoading 
       // console.log("INSIDE")
       const accounts = await provider!.listAccounts();
       const account = accounts[0];
-      console.log(account)
+      // console.log(account)
       if (!account) {
         throw "Cannot retreive account! Please, connect to web3 wallet."
       }

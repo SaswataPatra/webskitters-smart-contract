@@ -20,14 +20,14 @@ export function Maincomponent() {
   // console.log("SIGNER ")
   const handleSubmit = async (type: "BUY" | "SELL") => {
     try {
-      console.log( contract?.data)
+      // console.log( contract?.data)
 
       const amountElement: any = document.querySelector('#amount');
       const amount = ethers.parseEther(amountElement.value);
       // console.log("This is the amount", amount)
 
 
-      console.log(window.global)
+      // console.log(window.global)
       switch (type) {
         case 'BUY':
           try {
@@ -35,7 +35,7 @@ export function Maincomponent() {
             if (contract && contract.data) {
 
               const tx_purchase = await contract.data.buyGoldTokens({ value: amount })
-              console.log('Transaction Hash:', tx_purchase);
+              // console.log( tx_purchase);
 
             }
           } catch (err) {
@@ -46,7 +46,7 @@ export function Maincomponent() {
           try {
             if (contract && contract.data){
               const tx_sale = await contract.data.sellGoldToken(amount);
-            console.log('Transaction Hash:', tx_sale);
+            // console.log(tx_sale);
             }
             
           } catch (err) {
