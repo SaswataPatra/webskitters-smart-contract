@@ -43,8 +43,8 @@ export const createWeb3State = ({ethereum,provider,contract,isLoading}: Web3Depe
   }
 }
 
-const NETWORK_ID = process.env.NEXT_PUBLIC_NETWORK_ID
 
+const NETWORK_ID = 11155111
 
 export const loadContract = async (
     name: string, 
