@@ -17,10 +17,10 @@ export function Maincomponent() {
   const [goldPrice, setGoldPrice] = useState<string | null>(null)
   const { provider } = useWeb3()
   const { contract } = useContract();
-  console.log("SIGNER ")
+  // console.log("SIGNER ")
   const handleSubmit = async (type: "BUY" | "SELL") => {
     try {
-      console.log("INSIDE HANDLE", contract?.data)
+      console.log( contract?.data)
 
       const amountElement: any = document.querySelector('#amount');
       const amount = ethers.parseEther(amountElement.value);
@@ -89,7 +89,7 @@ export function Maincomponent() {
 
           const signer = await provider!.getSigner()
 
-          console.log("SIGNER :", signer)
+          // console.log("SIGNER :", signer)
           const fetchedPrice = await contract.data.getLatestGoldUsdPrice().then((res: { toString: () => any }) => res.toString());
           var finalPrice = new BigNumber(fetchedPrice).multipliedBy(Math.pow(10, -8))
           // console.log("This is the finalPrice", finalPrice.toString())

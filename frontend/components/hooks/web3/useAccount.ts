@@ -18,10 +18,10 @@ export const hookFactory: AccountHookFactory = ({ provider, ethereum, isLoading 
   const { data, mutate, isValidating, ...swr } = useSWR(
     provider ? "web3/useAccount" : null,
     async () => {
-      console.log("INSIDE")
+      // console.log("INSIDE")
       const accounts = await provider!.listAccounts();
       const account = accounts[0];
-      console.log('THIS IS ACCOUNT :', account)
+      console.log(account)
       if (!account) {
         throw "Cannot retreive account! Please, connect to web3 wallet."
       }
