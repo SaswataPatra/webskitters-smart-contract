@@ -23,7 +23,7 @@ const Walletbar: FunctionComponent<WalletbarProps> = ({
 }) => {
   
 
-  if (isLoading) {
+  if (isLoading && isInstalled) {
     return (
       <div>
         <button
