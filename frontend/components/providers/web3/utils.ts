@@ -46,19 +46,25 @@ export const createWeb3State = ({ethereum,provider,contract,isLoading}: Web3Depe
 
 const NETWORK_ID = 11155111
 
+
 export const loadContract = async (
-    name: string, 
-    provider: BrowserProvider 
-  ): Promise<Contract> => {
-  
+  name: string,
+  provider: BrowserProvider
+): Promise<Contract> => {
+  try {
     if (!NETWORK_ID) {
       return Promise.reject("Network ID is not defined!");
     }
     const res = await fetch(`contracts/${name}.json`);
 
     const Artifact = await res.json();
-    const signer = await provider!.getSigner()
-    if (Artifact.networks[NETWORK_ID].address) {
+    // const signer = await provider!.getSigner()
+    const signer = await provider.getSigner();
+    if (!signer) {
+      return Promise.reject("Unable to get signer from provider!");
+    }
+
+    if (Artifact.networks[NETWORK_ID].address && provider) {
       const contract = new ethers.Contract(
         Artifact.networks[NETWORK_ID].address,
         Artifact.abi,
@@ -68,4 +74,8 @@ export const loadContract = async (
     } else {
       return Promise.reject(`Contract: [${name}] cannot be loaded!`);
     }
+  } catch (error) {
+    return Promise.reject(`Contract: [${name}] cannot be loaded!`)
   }
+
+}
